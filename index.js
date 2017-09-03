@@ -316,6 +316,7 @@ function request(action, data, options, cb) {
     httpOptions.method = 'POST'
     httpOptions.path = '/'
     httpOptions.body = body
+    httpOptions.protocol = options.protocol
 
     // Don't worry about self-signed certs for localhost/testing
     if (httpOptions.host == 'localhost' || httpOptions.host == '127.0.0.1' || httpOptions.host == 'kinesis')
@@ -327,6 +328,8 @@ function request(action, data, options, cb) {
       'Content-Type': 'application/x-amz-json-1.1',
       'X-Amz-Target': 'Kinesis_' + options.version + '.' + action,
     }
+
+    console.log('Http OPTIONS', httpOptions)
 
     function makeRequest(cb) {
       httpOptions.headers.Date = new Date().toUTCString()
