@@ -10,8 +10,8 @@ var util = require('util'),
     awscred = require('awscred')
 
 var protocol = {
-  http: http,
-  https: https
+  'http:': http,
+  'https:': https
 }
 
 exports.stream = function(options) {
