@@ -1,12 +1,18 @@
 var util = require('util'),
     stream = require('stream'),
     https = require('https'),
+    http = require('http'),
     crypto = require('crypto'),
     async = require('async'),
     once = require('once'),
     lruCache = require('lru-cache'),
     aws4 = require('aws4'),
     awscred = require('awscred')
+
+var protocol = {
+  http: http,
+  https: https
+}
 
 exports.stream = function(options) {
   return new KinesisStream(options)
@@ -312,7 +318,7 @@ function request(action, data, options, cb) {
     httpOptions.body = body
 
     // Don't worry about self-signed certs for localhost/testing
-    if (httpOptions.host == 'localhost' || httpOptions.host == '127.0.0.1')
+    if (httpOptions.host == 'localhost' || httpOptions.host == '127.0.0.1' || httpOptions.host == 'kinesis')
       httpOptions.rejectUnauthorized = false
 
     httpOptions.headers = {
@@ -327,7 +333,7 @@ function request(action, data, options, cb) {
 
       aws4.sign(httpOptions, options.credentials)
 
-      var req = https.request(httpOptions, function(res) {
+      var req = protocol[httpOptions.protocol]['request'](httpOptions, function(res) {
         var json = ''
 
         res.setEncoding('utf8')
@@ -423,6 +429,7 @@ function resolveOptions(options) {
   if (typeof region === 'object' && region != null) {
     options.host = options.host || region.host
     options.port = options.port || region.port
+    options.protocol = options.protocol || region.protocol || 'https'
     options.region = options.region || region.region
     options.version = options.version || region.version
     options.agent = options.agent || region.agent
