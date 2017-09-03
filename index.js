@@ -326,10 +326,8 @@ function request(action, data, options, cb) {
       'Host': httpOptions.host,
       'Content-Length': Buffer.byteLength(body),
       'Content-Type': 'application/x-amz-json-1.1',
-      'X-Amz-Target': 'Kinesis_' + options.version + '.' + action,
+      'X-Amz-Target': 'Kinesis_' + options.version + '.' + action
     }
-
-    console.log('Http OPTIONS', httpOptions)
 
     function makeRequest(cb) {
       httpOptions.headers.Date = new Date().toUTCString()
