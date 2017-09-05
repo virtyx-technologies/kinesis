@@ -1,7 +1,5 @@
-kinesis
+# kinesis (Virtyx) #
 -------
-
-[![Build Status](https://secure.travis-ci.org/mhart/kinesis.png?branch=master)](http://travis-ci.org/mhart/kinesis)
 
 A Node.js stream implementation of [Amazon's Kinesis](http://docs.aws.amazon.com/kinesis/latest/APIReference/).
 
@@ -10,9 +8,6 @@ Allows the consumer to pump data directly into (and out of) a Kinesis stream.
 This makes it trivial to setup Kinesis as a logging sink with [Bunyan](https://github.com/trentm/node-bunyan), or any other logging library.
 
 For setting up a local Kinesis instance (eg for testing), check out [Kinesalite](https://github.com/mhart/kinesalite).
-
-NB: API has changed from 0.x to 1.x
------------------------------------
 
 Example
 -------
