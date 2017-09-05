@@ -62,7 +62,7 @@ KinesisStream.prototype.drainBuffer = function() {
     if (self.shards.every(function(shard) { return shard.ended }))
       return self.push(null)
 
-    self.drainBuffer()
+    setTimeout(function() { self.drainBuffer() }, 200)
   })
 }
 
